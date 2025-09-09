@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 10
+
+typedef struct {
+    int arr[MAX];
+    int top1, top2;  // two tops for two stacks
+} TwoStack;
+
+void init(TwoStack *s) {
+    s->top1 = -1;       // Stack1 starts empty
+    s->top2 = MAX;      // Stack2 starts empty
+}
+
+// Push into Stack1
+void push1(TwoStack *s, int val) {
+    if (s->top1 + 1 == s->top2) {
+        printf("Stack Overflow!\n");
+        return;
+    }
+    s->arr[++s->top1] = val;
+}
+
+// Push into Stack2
+void push2(TwoStack *s, int val) {
+    if (s->top1 + 1 == s->top2) {
+        printf("Stack Overflow!\n");
+        return;
+    }
+    s->arr[--s->top2] = val;
+}
+
+// Pop from Stack1
+int pop1(TwoStack *s) {
+    if (s->top1 == -1) {
+        printf("Stack1 Underflow!\n");
+        return -1;
+    }
+    return s->arr[s->top1--];
+}
+
+// Pop from Stack2
+int pop2(TwoStack *s) {
+    if (s->top2 == MAX) {
+        printf("Stack2 Underflow!\n");
+        return -1;
+    }
+    return s->arr[s->top2++];
+}
+
+int main() {
+    TwoStack s;
+    init(&s);
+
+    push1(&s, 10);
+    push1(&s, 20);
+    push2(&s, 30);
+    push2(&s, 40);
+
+    printf("Popped from Stack1: %d\n", pop1(&s));
+    printf("Popped from Stack2: %d\n", pop2(&s));
+
+    return 0;
+}

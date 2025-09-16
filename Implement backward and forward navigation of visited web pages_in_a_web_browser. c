@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Node structure
+typedef struct Node {
+    char url[100];
+    struct Node *prev, *next;
+} Node;
+
+Node* current = NULL;
+
+// Function to create new node
+Node* createNode(char* url) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    strcpy(newNode->url, url);
+    newNode->prev = newNode->next = NULL;
+    return newNode;
+}
+
+// Visit a new page
+void visitPage(char* url) {
+    Node* newPage = createNode(url);
+
+    // Remove all forward history if any
+    if (current != NULL) {
+        Node* temp = current->next;
+        while (temp != NULL) {
+            Node* del = temp;
+            temp = temp->next;
+            free(del);
+        }
+        current->next = newPage;
+        newPage->prev = current;
+    }
+
+    current = newPage;
+    printf("Visited: %s\n", current->url);
+}
+
+// Go Back
+void goBack() {
+    if (current != NULL && current->prev != NULL) {
+        current = current->prev;
+        printf("Back to: %s\n", current->url);
+    } else {
+        printf("No previous page!\n");
+    }
+}
+
+// Go Forward
+void goForward() {
+    if (current != NULL && current->next != NULL) {
+        current = current->next;
+        printf("Forward to: %s\n", current->url);
+    } else {
+        printf("No forward page!\n");
+    }
+}
+
+// Show current page
+void showCurrent() {
+    if (current != NULL)
+        printf("Current Page: %s\n", current->url);
+    else
+        printf("No page visited yet!\n");
+}
+
+int main() {
+    int choice;
+    char url[100];
+
+    while (1) {
+        printf("\n===== Browser Menu =====\n");
+        printf("1. Visit Page\n");
+        printf("2. Back\n");
+        printf("3. Forward\n");
+        printf("4. Show Current Page\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        getchar(); // consume newline
+
+        switch (choice) {
+            case 1:
+                printf("Enter URL: ");
+                gets(url); // (for simplicity, use gets — but dangerous in real apps!)
+                visitPage(url);
+                break;
+            case 2:
+                goBack();
+                break;
+            case 3:
+                goForward();
+                break;
+            case 4:
+                showCurrent();
+                break;
+            case 5:
+                printf("Exiting...\n");
+                exit(0);
+            default:
+                printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}

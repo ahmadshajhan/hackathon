@@ -41,7 +41,7 @@
 
 ```bash
 # clone
-git clone https://github.com/yourusername/your-datastructures-repo.git
+git clone [https://github.com/yourusername/your-datastructures-repo.git](https://github.com/ahmadshajhan/hackathon.git)
 cd your-datastructures-repo
 
 # build (example for a C project)

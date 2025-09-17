@@ -151,7 +151,7 @@ Perfect for **coding interviews, placements, and competitive programming** ⚡
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/DSA-Repo.git
+[git clone https://github.com/your-username/DSA-Repo.git](https://github.com/ahmadshajhan/hackathon.git)
 
 # Move into directory
 cd DSA-Repo
